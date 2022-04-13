@@ -1,25 +1,26 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Address from '../../Models/Address'
+import Address from 'App/Models/Address'
+import User from 'App/Models/User'
 
 export default class AddressesController {
-  public async index({}: HttpContextContract) {
-    const addresses = await Address.query()
-
-    return {
-      data: addresses,
-    }
-  }
-
-  public async store({ response, request }: HttpContextContract) {
+  public async store({ request, response, params }: HttpContextContract) {
     try {
-      const body = request.only(['address', 'country', 'countryCode', 'city', 'state', 'zipcode'])
-      const address = await Address.create(body)
+      const body = request.body()
+      const userId = params.userId
 
-      return response.status(200).send({ message: 'User create Sucesso', address })
+      await User.findOrFail(userId)
+
+      body.userId = userId
+
+      const contact = await Address.create(body)
+
+      response.status(201).send({ message: 'Address added successfully! ' })
+
+      return {
+        data: contact,
+      }
     } catch (e) {
-      return response.status(400).send({ message: 'Falha ao registrar usuario', e })
+      return response.status(400).send({ message: 'Failed to register Address !', e })
     }
   }
-
-  public async show({}: HttpContextContract) {}
 }

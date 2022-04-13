@@ -1,11 +1,15 @@
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
 
 export default class UsersController {
-  public async index({ response }: HttpContextContract) {
-    const user = await User.all()
-    return response.ok(user)
+  public async index({}: HttpContextContract) {
+    const userContact = await User.query().preload('contacts')
+    const userAddress = await User.query().preload('addresses')
+
+    return {
+      data: userContact,
+      userAddress,
+    }
   }
 
   public async store({ response, request }: HttpContextContract) {
@@ -13,9 +17,25 @@ export default class UsersController {
       const body = request.only(['email', 'firstName', 'lastName'])
       const user = await User.create(body)
 
-      return response.status(200).send({ message: 'Endereço criado com sucesso !', user })
+      return response.status(200).send({ message: 'User created successfully!', user })
     } catch (e) {
-      return response.status(400).send({ message: 'Falha ao registrar endereço !', e })
+      return response.status(400).send({ message: 'Failed to register user !', e })
+    }
+  }
+  public async show({ params, response }: HttpContextContract) {
+    try {
+      const userContact = await User.findOrFail(params.id)
+      const userAddress = await User.findOrFail(params.id)
+
+      await userContact.load('contacts')
+      await userAddress.load('addresses')
+
+      return {
+        data: userContact,
+        userAddress,
+      }
+    } catch (e) {
+      return response.status(404).send({ message: 'Failed to find user by id !', e })
     }
   }
 }

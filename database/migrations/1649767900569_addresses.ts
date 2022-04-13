@@ -12,6 +12,7 @@ export default class Addresses extends BaseSchema {
       table.string('city')
       table.string('state')
       table.string('zipcode')
+      table.integer('user_id').references('users.id')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

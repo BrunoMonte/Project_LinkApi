@@ -9,6 +9,7 @@ export default class Contacts extends BaseSchema {
       table.string('name')
       table.string('phone_number')
       table.string('email')
+      table.integer('user_id').references('users.id')
 
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

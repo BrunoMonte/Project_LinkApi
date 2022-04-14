@@ -17,7 +17,7 @@ export default class UsersController {
       const body = request.only(['email', 'firstName', 'lastName'])
       const user = await User.create(body)
 
-      return response.status(200).send({ message: 'User created successfully!', user })
+      return response.status(201).send({ message: 'User created successfully!', user })
     } catch (e) {
       return response.status(400).send({ message: 'Failed to register user !', e })
     }

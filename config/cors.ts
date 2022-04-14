@@ -8,18 +8,6 @@
 import { CorsConfig } from '@ioc:Adonis/Core/Cors'
 
 const corsConfig: CorsConfig = {
-  /*
-  |--------------------------------------------------------------------------
-  | Enabled
-  |--------------------------------------------------------------------------
-  |
-  | A boolean to enable or disable CORS integration from your AdonisJs
-  | application.
-  |
-  | Setting the value to `true` will enable the CORS for all HTTP request. However,
-  | you can define a function to enable/disable it on per request basis as well.
-  |
-  */
   enabled: (request) => request.url().startsWith('/62151ae9cdb9d09717adf48c.mockapi.io/api/v1'),
 
   // You can also use a function that return true or false.

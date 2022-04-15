@@ -20,7 +20,7 @@ export default class ContactsController {
         data: contact,
       }
     } catch (e) {
-      return response.status(400).send({ message: 'Failed to register Address !', e })
+      return response.status(400).send({ message: 'Failed to register Contacts !', e })
     }
   }
 }

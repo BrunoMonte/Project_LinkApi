@@ -12,12 +12,12 @@ export default class AddressesController {
 
       body.userId = userId
 
-      const contact = await Address.create(body)
+      const address = await Address.create(body)
 
       response.status(201).send({ message: 'Address added successfully! ' })
 
       return {
-        data: contact,
+        data: address,
       }
     } catch (e) {
       return response.status(400).send({ message: 'Failed to register Address !', e })

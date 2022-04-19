@@ -14,7 +14,7 @@ Versão: 1.0.
 
 ### No cmd seguinte comando com link do repositório:
 
-    - https://github.com/BrunoMonte/Project_LinkApi.git git clone
+    - git clone https://github.com/BrunoMonte/Project_LinkApi.git
 
 ### Na pasta do arquivo: 
     - yarn
